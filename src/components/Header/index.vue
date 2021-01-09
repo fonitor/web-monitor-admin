@@ -16,12 +16,12 @@
         <div class="header-right">
           <router-link to="/">首页</router-link>
           <router-link to="/">用户</router-link>
-          <el-dropdown class="err">
+          <el-dropdown class="err" @command="handleCommand">
             <span class="el-dropdown-link">
               错误<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>js 错误统计</el-dropdown-item>
+            <el-dropdown-menu slot="dropdown" >
+              <el-dropdown-item command='/js/error'>js 错误统计</el-dropdown-item>
               <el-dropdown-item>api 接口统计</el-dropdown-item>
               <el-dropdown-item>静态资源错误统计</el-dropdown-item>
             </el-dropdown-menu>
@@ -59,6 +59,16 @@ export default {
       value: "",
     };
   },
+  methods: {
+    /**
+     * 跳转
+     */
+    handleCommand(path) {
+      this.$router.push({
+        path
+      })
+    }
+  }
 };
 </script>
 

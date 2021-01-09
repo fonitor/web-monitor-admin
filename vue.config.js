@@ -2,7 +2,6 @@
 const px2rem = require('postcss-px2rem')
 
 module.exports = {
-    publicPath: './',
     css: {
         modules: false, // 启用 CSS modules
         extract: true, // 是否使用css分离插件
