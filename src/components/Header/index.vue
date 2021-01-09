@@ -64,32 +64,34 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  background: #ffffff;
   width: 100%;
-  height: 60px;
+  height: 120px;
   overflow: hidden;
   box-shadow: 0 2px 0 rgba(37, 11, 54, 0.04);
   position: fixed;
   left: 0;
   top: 0;
   .header-box {
-    margin-top: 10px;
+    margin-top: 20px;
   }
   .header-right {
     color: #493e54;
-    margin-top: 13px;
-    font-size: 16px;
+    margin-top: 20px;
     display: flex;
+    line-height: 80px;
     a {
       display: flex;
       color: #493e54;
-      margin-right: 20px;
+      margin-right: 25px;
+      font-size: 36px;
     }
     .err {
-        margin-right: 20px;
-        .el-dropdown-link {
-            font-size: 16px;
-            color: #493e54;
-        }
+      margin-right: 25px;
+      .el-dropdown-link {
+        font-size: 36px;
+        color: #493e54;
+      }
     }
   }
 }

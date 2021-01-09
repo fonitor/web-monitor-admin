@@ -2,9 +2,11 @@
   <div id="app">
     <el-container>
       <Header />
-      <el-main>
-        <router-view></router-view>
-      </el-main>
+      <div class="box">
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </div>
     </el-container>
   </div>
 </template>
@@ -21,5 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.box {
+  margin-top: 120px;
+}
 </style>
