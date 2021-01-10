@@ -89,15 +89,15 @@ export default {
     color: #493e54;
     margin-top: 20px;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     line-height: 80px;
     a {
       display: flex;
       color: #493e54;
-      margin-right: 25px;
       font-size: 36px;
     }
     .err {
-      margin-right: 25px;
       .el-dropdown-link {
         font-size: 36px;
         color: #493e54;
