@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="js-box">
         js
     </div>
 </template>
@@ -11,7 +11,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box {
-  margin-top: 120px;
-}
+    
 </style>

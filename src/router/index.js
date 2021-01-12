@@ -1,31 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from '../views/Index/index.vue'
-import JsError from '../views/Js/error.vue'
-import httpLog from '../views/Index/index.vue'
-import httpError from '../views/Index/index.vue'
+import Login from '../views/Login.vue'
+import jsError from '../views/js/error.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'index',
-    component: Index
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    hidden: true
   }, {
     path: '/js/error',
-    name: 'JsError',
-    component: JsError
-  }, {
-    path: '/http/log',
-    name: 'httpLog',
-    component: httpLog
-  }, {
-    path: '/http/error',
-    name: 'httpError',
-    component: httpError
+    name: 'jsError',
+    component: jsError,
+    hidden: true
   }
 ]
+
+export const asyncRouterMap = routes
 
 const router = new VueRouter({
   mode: 'history',

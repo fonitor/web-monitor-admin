@@ -1,0 +1,102 @@
+/*css reset*/
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    -webkit-text-size-adjust: none;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+    clear: both;
+}
+body {
+    font-family: "sans-serif", "PingFang SC", "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", "Helvetica Neue",
+        Helvetica, Arial;
+    font-size: 13px;
+    background-color: #ecf0f5;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+i,
+span,
+em,
+cite,
+p,
+dl,
+dt,
+dd,
+span,
+b {
+    font-style: normal;
+    font-weight: normal;
+}
+input,
+button,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+ul,
+ol,
+li {
+    list-style: none;
+}
+a {
+    color: #29c1c2;
+    text-decoration: none;
+}
+a:hover {
+    color: rgb(131, 192, 253);
+}
+
+.word-break {
+    word-break: break-word; /* 支持IE和chrome，FF不支持*/
+    word-wrap: break-word; /* 以上三个浏览器均支持 */
+}
+
+
