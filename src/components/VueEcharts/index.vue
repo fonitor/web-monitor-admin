@@ -1,9 +1,8 @@
 <template>
-  <div :class="[className, 'echarts-box']"></div>
+  <div :class="[className, 'echarts-box']" id="ceshi"></div>
 </template>
 
 <script>
-import Echarts from "echarts";
 import { generateUUID } from "../../utils/index";
 
 export default {
@@ -21,20 +20,23 @@ export default {
   },
   mounted() {
     this.className = `echarts-${generateUUID()}`;
+    this.initChart();
   },
   methods: {
     initChart() {
-      if (!this.chart) {
-        this.dom = document.getElementsByClassName(className)[0];
-        this.chart = Echarts.init(dom, ctx.theme);
-      }
-      if (ctx.options) {
-        this.chart.setOption(ctx.options);
-      }
+      setTimeout(() => {
+        if (!this.chart) {
+          this.dom = document.getElementsByClassName(this.className)[0];
+          this.chart = this.$echarts.init(this.dom);
+        }
+        if (!!this.options) {
+          this.chart.setOption(this.options);
+        }
+      }, 300);
     },
   },
   watch: {
-    options: () => {
+    options: function(){
       this.initChart();
     },
   },

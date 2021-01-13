@@ -1,18 +1,12 @@
 <template>
-  <div id="main">
+  <div id="app">
    <layout></layout>
   </div>
 </template>
 
 <script>
-import { getCookie } from './common/js/utils'
 export default {
-  name: 'ebs',
-  data() {
-    
-  },
-  mounted() {
-  },
+  name: 'app',
   components: {
     layout: () => import('./components/layout/AdminLayout')
   }

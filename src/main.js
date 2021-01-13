@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
+import Echarts from 'echarts'
+Vue.prototype.$echarts = Echarts
+
 // import 'lib-flexible'
 // import './plugins/qiankun.js'
 

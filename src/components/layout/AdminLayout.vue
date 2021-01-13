@@ -190,6 +190,7 @@ export default {
         top: 88px;
         bottom: 0;
         background-color: #334142 !important;
+        overflow: hidden;
         .eboss-menu-search {
           width: 90%;
           position: relative;
@@ -205,9 +206,10 @@ export default {
           position: absolute;
           top: 40px;
           bottom: 0;
-          overflow-y: auto;
+          overflow: hidden;
+          // overflow-y: auto;
           -webkit-overflow-scrolling: touch;
-          overflow-x: hidden;
+          // overflow-x: hidden;
 
           li.el-submenu {
             &.is-opened {
