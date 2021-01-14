@@ -7,7 +7,7 @@
           <js-list :projectApp="app"></js-list>
         </el-tab-pane>
         <el-tab-pane label="错误分布" name="spread">
-          <js-spread-count :projectApp="app"></js-spread-count>
+          <js-spread-count :projectApp="app" v-if="activeName == 'spread'"></js-spread-count>
         </el-tab-pane>
       </el-tabs>
     </div>

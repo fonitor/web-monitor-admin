@@ -32,7 +32,7 @@ export default {
     },
     startTime: {
       type: [String, Number],
-      defaule: "2021-01-13 00:00:00"
+      default: "2021-01-13 00:00:00"
     },
     endTime: {
       type: [String, Number],

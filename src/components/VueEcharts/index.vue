@@ -1,5 +1,5 @@
 <template>
-  <div :class="[className, 'echarts-box']" id="ceshi"></div>
+  <div :class="[className, 'echarts-box']"></div>
 </template>
 
 <script>
@@ -45,6 +45,14 @@ export default {
 
 <style lang="scss" scoped>
 .echarts-box {
+  width: 100%;
+  height: 100%;
+  div {
+    width: 100%;
+    height: 100%;
+  }
+}
+.echarts {
   width: 100%;
   height: 100%;
 }

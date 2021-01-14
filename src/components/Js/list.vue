@@ -38,7 +38,7 @@ export default {
     },
     startTime: {
       type: [String, Number],
-      defaule: "2021-01-13 00:00:00",
+      default: "2021-01-13 00:00:00",
     },
     endTime: {
       type: [String, Number],
@@ -59,6 +59,7 @@ export default {
     }
   },
   methods: {
+    
     // js 错误列表
     async getJsList() {
       let res = await jsList({

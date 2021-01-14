@@ -25,3 +25,16 @@ export function jsList (query) {
   })
 }
 
+/**
+ * js错误分布
+ * @param {*} query
+ */
+export function jsSpread (query) {
+  return fetch({
+    url: '/api/js/spread/count',
+    method: 'post',
+    data: query
+  })
+}
+
+

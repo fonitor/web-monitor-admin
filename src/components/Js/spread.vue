@@ -1,8 +1,26 @@
 <template>
-  <div>错误分布</div>
+  <div class="spread-box">
+    <div>JsError上报UA占比（版本号、操作系统、手机型号）</div>
+    <div class="data">
+      <el-row>
+        <el-col :span="8" class="item">
+          <vue-echarts :options="versionErrorOptios"></vue-echarts>
+        </el-col>
+        <el-col :span="8" class="item">
+          <vue-echarts :options="osErrorOptions"></vue-echarts>
+        </el-col>
+        <el-col :span="8" class="item">
+            <vue-echarts :options="deviceErrorOptions"></vue-echarts>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
+import VueEcharts from "../../components/VueEcharts/index";
+import { jsSpread } from "../../api/js";
+
 export default {
   name: "jsSpreadCount",
   props: {
@@ -12,16 +30,97 @@ export default {
     },
     startTime: {
       type: [String, Number],
-      defaule: "2021-01-13 00:00:00",
+      default: "2021-01-13 00:00:00",
     },
     endTime: {
       type: [String, Number],
       default: "2021-01-13 23:59:59",
     },
   },
-  data: {},
+  components: {
+    VueEcharts,
+  },
+  data() {
+    return {
+      versionErrorOptios: {},
+      osErrorOptions: {},
+      deviceErrorOptions: {}
+    };
+  },
+  mounted() {
+    this.getSpread();
+  },
+  methods: {
+    async getSpread() {
+      if (!this.projectApp) return;
+      let res = await jsSpread({
+        app: this.projectApp,
+        startTime: this.startTime,
+        endTime: this.endTime,
+      });
+      if (!res.success) return;
+      let useData = res.model;
+      let initOption = {
+        title: {
+          left: "33%",
+          top: "44%",
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+        },
+        series: [
+          {
+            type: "pie",
+            radius: ["50%", "70%"],
+            center: ["40%", "50%"],
+            data: useData.versionError,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
+        ],
+      };
+      initOption.title.text = "版本号";
+      initOption.series[0].data = useData.versionError;
+      this.versionErrorOptios = JSON.parse(JSON.stringify(initOption));
+      initOption.title.text = "操作系统";
+      initOption.title.left = "32%";
+      initOption.series[0].data = useData.osError;
+      this.osErrorOptions = JSON.parse(JSON.stringify(initOption));
+      initOption.title.text = "手机型号";
+      initOption.title.left = "32%";
+      initOption.series[0].data = useData.deviceError;
+      this.deviceErrorOptions = JSON.parse(JSON.stringify(initOption))
+    },
+  },
+  watch: {
+    projectApp() {
+      if (this.projectApp) {
+        this.getSpread();
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.spread-box {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  .data {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    margin-top: 20px;
+    .item {
+      height: 250px;
+    }
+  }
+}
 </style>
