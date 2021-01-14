@@ -9,7 +9,7 @@
             :content="scope.row.errorMessage"
             placement="bottom-end"
           >
-            <div>{{scope.row.errorMessage.substr(0, 30)}}</div>
+            <div>{{ scope.row.errorMessage.substr(0, 30) }}</div>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -19,6 +19,10 @@
       <el-table-column prop="deviceName" label="系统信息"></el-table-column>
       <el-table-column prop="createdAt" label="记录时间"></el-table-column>
     </el-table>
+    <div class="page">
+      <el-pagination background layout="prev, pager, next" :page-size="pageSize" @current-change="pageChange" :total="count">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -70,6 +74,11 @@ export default {
       this.jsLists = res.model.lists || [];
       this.count = res.model.count || 0;
     },
+    pageChange(v) {
+      console.log(v)
+      this.page = v
+      this.getJsList()
+    }
   },
   watch: {
     projectApp() {
@@ -83,7 +92,7 @@ export default {
 
 <style lang="scss">
 .el-tooltip__popper {
-    max-width: 400px;
+  max-width: 400px;
 }
 </style>
 
@@ -93,8 +102,14 @@ export default {
   height: auto;
   overflow: hidden;
   .message-item {
-      width: 500px;
-      height: 100px;
+    width: 500px;
+    height: 100px;
+  }
+  .page {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }
 </style>

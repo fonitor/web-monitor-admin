@@ -6,7 +6,9 @@
         <el-tab-pane label="错误列表" name="list">
           <js-list :projectApp="app"></js-list>
         </el-tab-pane>
-        <el-tab-pane label="错误分布" name="spread">错误分布</el-tab-pane>
+        <el-tab-pane label="错误分布" name="spread">
+          <js-spread-count :projectApp="app"></js-spread-count>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -14,13 +16,15 @@
 
 <script>
 import jsList from '../../components/Js/list'
+import jsSpreadCount from '../../components/Js/spread'
 import topHeader from '../../components/Js/top.vue';
 
 export default {
   name: "jsError",
   components: {
     topHeader,
-    jsList
+    jsList,
+    jsSpreadCount
   },
   data() {
     return {
