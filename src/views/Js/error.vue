@@ -23,6 +23,7 @@ import jsList from "../../components/Js/list";
 import jsSpreadCount from "../../components/Js/spread";
 import topHeader from "../../components/Js/top.vue";
 import topTime from '../../components/Time/index'
+import { datTime } from '../../utils/index'
 
 export default {
   name: "jsError",
@@ -43,10 +44,11 @@ export default {
     };
   },
   mounted() {
+    let time = datTime()
     this.initData = {
       app: this.$route.query.app,
-      startTime: "2021-01-13 00:00:00",
-      endTime: "2021-01-13 23:59:59",
+      startTime: time[0],
+      endTime: time[1],
     }
   },
   methods: {

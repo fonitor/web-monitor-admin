@@ -41,8 +41,19 @@ function time(timeStamp) {
     return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
 }
 
+/**
+ * 当前时间
+ */
+function datTime() {
+    const date = new Date()
+    const start = date.getFullYear() + '-' + Number(date.getMonth() + 1) + '-' + date.getDate() + ' 00:00:00'
+    const end = date.getFullYear() + '-' + Number(date.getMonth() + 1) + '-' + date.getDate() + ' 23:59:59'
+    return [time(start), time(end)]
+}
+
 export {
     debounce,
     generateUUID,
-    time
+    time,
+    datTime
 }
