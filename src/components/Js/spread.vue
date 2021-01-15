@@ -36,18 +36,10 @@ import { jsSpread } from "../../api/js";
 export default {
   name: "jsSpreadCount",
   props: {
-    projectApp: {
-      type: [String, Number],
-      default: "",
-    },
-    startTime: {
-      type: [String, Number],
-      default: "2021-01-13 00:00:00",
-    },
-    endTime: {
-      type: [String, Number],
-      default: "2021-01-13 23:59:59",
-    },
+    initData: {
+      type: Object,
+      default: {}
+    }
   },
   components: {
     VueEcharts,
@@ -62,15 +54,16 @@ export default {
     };
   },
   mounted() {
-    this.getSpread();
+    if (this.initData && !!this.initData.app) {
+      this.getSpread();
+    }
   },
   methods: {
     async getSpread() {
-      if (!this.projectApp) return;
       let res = await jsSpread({
-        app: this.projectApp,
-        startTime: this.startTime,
-        endTime: this.endTime,
+        app: this.initData.app,
+        startTime: this.initData.startTime,
+        endTime: this.initData.endTime,
       });
       if (!res.success) return;
       let useData = res.model;
@@ -118,7 +111,7 @@ export default {
   },
   watch: {
     projectApp() {
-      if (this.projectApp) {
+      if (this.initData) {
         this.getSpread();
       }
     },

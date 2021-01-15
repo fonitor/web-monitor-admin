@@ -9,6 +9,12 @@ Vue.prototype.$echarts = Echarts
 // import 'lib-flexible'
 // import './plugins/qiankun.js'
 
+/**
+ * @method : 全局注册方法
+ */
+import Prototype from './utils/globalPrototype'
+Vue.use(Prototype)
+
 Vue.config.productionTip = false
 
 new Vue({

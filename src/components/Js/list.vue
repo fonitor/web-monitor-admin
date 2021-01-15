@@ -32,18 +32,10 @@ import { jsList } from "../../api/js";
 export default {
   name: "jsList",
   props: {
-    projectApp: {
-      type: [String, Number],
-      default: "",
-    },
-    startTime: {
-      type: [String, Number],
-      default: "2021-01-13 00:00:00",
-    },
-    endTime: {
-      type: [String, Number],
-      default: "2021-01-13 23:59:59",
-    },
+    initData: {
+      type: Object,
+      default: {}
+    }
   },
   data() {
     return {
@@ -54,18 +46,17 @@ export default {
     };
   },
   mounted() {
-    if (this.projectApp) {
+    if (this.initData && !!this.initData.app) {
       this.getJsList();
     }
   },
   methods: {
-    
     // js 错误列表
     async getJsList() {
       let res = await jsList({
-        startTime: this.startTime,
-        endTime: this.endTime,
-        app: this.projectApp,
+        startTime: this.initData.startTime || "",
+        endTime: this.initData.endTime || "",
+        app: this.initData.app || "",
         pageSize: this.pageSize,
         page: this.page,
       });
@@ -82,8 +73,8 @@ export default {
     }
   },
   watch: {
-    projectApp() {
-      if (this.projectApp) {
+    initData() {
+      if (this.initData && !!this.initData.app) {
         this.getJsList();
       }
     },

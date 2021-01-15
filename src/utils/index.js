@@ -20,7 +20,29 @@ function generateUUID() {
     return uuid
 }
 
+function time(timeStamp) {
+    if (timeStamp === '') {
+        return
+    }
+    // let timestamp = Date.parse(new Date(stringTime));
+    // let time = timestamp.getFullYear()+timestamp.getMonth()+timestamp.getDate()+" "+timestamp.getHours()+":"+timestamp.getMinutes()+":"+timestamp.getSeconds();
+    const date = new Date(timeStamp.replace(/-/g, '/'))
+    const y = date.getFullYear()
+    let m = date.getMonth() + 1
+    m = m < 10 ? ('0' + m) : m
+    let d = date.getDate()
+    d = d < 10 ? ('0' + d) : d
+    let h = date.getHours()
+    h = h < 10 ? ('0' + h) : h
+    let minute = date.getMinutes()
+    let second = date.getSeconds()
+    minute = minute < 10 ? ('0' + minute) : minute
+    second = second < 10 ? ('0' + second) : second
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
+}
+
 export {
     debounce,
-    generateUUID
+    generateUUID,
+    time
 }

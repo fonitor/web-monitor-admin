@@ -26,17 +26,9 @@ import { jsCount } from "../../api/js";
 export default {
   name: "jsTop",
   props: {
-    projectApp: {
-      type: [String, Number],
-      default: "",
-    },
-    startTime: {
-      type: [String, Number],
-      default: "2021-01-13 00:00:00"
-    },
-    endTime: {
-      type: [String, Number],
-      default: "2021-01-13 23:59:59"
+    initData: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -50,7 +42,7 @@ export default {
     VueEcharts,
   },
   mounted() {
-    if (this.projectApp) {
+    if (this.initData && !!this.initData.app) {
       this.getJsCount();
     }
   },
@@ -99,9 +91,9 @@ export default {
         ],
       };
       let res = await jsCount({
-        app: this.projectApp,
-        startTime: this.startTime,
-        endTime: this.endTime,
+        app: this.initData.app,
+        startTime: this.initData.startTime,
+        endTime: this.initData.endTime,
       });
       if (!res.success) {
         return;
@@ -121,8 +113,8 @@ export default {
     },
   },
   watch: {
-    projectApp() {
-      if (this.projectApp) {
+    initData() {
+      if (this.initData && !!this.initData.app) {
         this.getJsCount();
       }
     },
