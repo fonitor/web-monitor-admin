@@ -10,15 +10,27 @@
           <vue-echarts :options="osErrorOptions"></vue-echarts>
         </el-col>
         <el-col :span="8" class="item">
-            <vue-echarts :options="deviceErrorOptions"></vue-echarts>
+          <vue-echarts :options="deviceErrorOptions"></vue-echarts>
         </el-col>
       </el-row>
+    </div>
+    <div class="data-map">
+      <div class="left">
+        <div class="item" v-for="(item, index) in mapData.map || []" v-bind:key="index">
+          <div class="province">{{item.name}}</div>
+          <div class="item-data">{{(item.value / mapData.count).toFixed(2) * 100}}%</div>
+        </div>
+      </div>
+      <div class="right">
+        <data-map :data="mapData"></data-map>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import VueEcharts from "../../components/VueEcharts/index";
+import DataMap from "../Map/index";
 import { jsSpread } from "../../api/js";
 
 export default {
@@ -39,12 +51,14 @@ export default {
   },
   components: {
     VueEcharts,
+    DataMap,
   },
   data() {
     return {
       versionErrorOptios: {},
       osErrorOptions: {},
-      deviceErrorOptions: {}
+      deviceErrorOptions: {},
+      mapData: {},
     };
   },
   mounted() {
@@ -95,7 +109,11 @@ export default {
       initOption.title.text = "手机型号";
       initOption.title.left = "32%";
       initOption.series[0].data = useData.deviceError;
-      this.deviceErrorOptions = JSON.parse(JSON.stringify(initOption))
+      this.deviceErrorOptions = JSON.parse(JSON.stringify(initOption));
+      this.mapData = {
+        map: useData.provinceError,
+        count: useData.errorCount,
+      };
     },
   },
   watch: {
@@ -120,6 +138,46 @@ export default {
     margin-top: 20px;
     .item {
       height: 250px;
+    }
+  }
+  .data-map {
+    width: 100%;
+    min-height: 300px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    .left,
+    .right {
+      width: 50%;
+      min-height: 300px;
+    }
+    .left {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      .item {
+        width: 70px;
+        margin: 10px;
+        height: 70px;
+        overflow: hidden;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 14px;
+        font-variant: tabular-nums;
+        line-height: 1.5;
+        list-style: none;
+        font-feature-settings: "tnum";
+        .province {
+          padding-bottom: 5px;
+        }
+        .item-data {
+          padding-top: 5px;
+          font-size: 18px;
+          font-weight: 700;
+          border-top: 1px solid #ddd;
+        }
+      }
     }
   }
 }

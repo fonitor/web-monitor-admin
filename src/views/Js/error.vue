@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       app: "",
-       activeName: 'list'
+       activeName: 'spread'
     };
   },
   mounted() {
