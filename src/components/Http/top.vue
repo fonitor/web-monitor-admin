@@ -1,16 +1,15 @@
 <template>
-  <div class="top">
-    <div class="title">
-      HTTP请求整体实时趋势<span>点击曲线可以查看指定时间点的信息</span>
-    </div>
-    <div class="content">
-      <vue-echarts :options="options"></vue-echarts>
-    </div>
-  </div>
+  <table-box
+    title="HTTP请求整体实时趋势"
+    titleTip="点击曲线可以查看指定时间点的信息"
+  >
+    <vue-echarts :options="options"></vue-echarts>
+  </table-box>
 </template>
 
 <script>
 import VueEcharts from "../../components/VueEcharts/index";
+import tableBox from "../Table/index";
 
 export default {
   name: "httpTop",
@@ -27,6 +26,7 @@ export default {
   },
   components: {
     VueEcharts,
+    tableBox,
   },
   mounted() {
     if (!!this.data && !!this.data.errorLists && !!this.data.successLists) {
@@ -82,14 +82,12 @@ export default {
           },
         ],
       };
-      console.log(this.data);
       let xData = [],
         errorLists = this.data.errorLists || [],
         successLists = this.data.successLists || [],
         count = [],
         errorCount = [],
         successCount = [];
-      console.log(errorLists);
 
       errorLists.forEach((v) => {
         xData.push(v.time);
@@ -98,7 +96,7 @@ export default {
       successLists.forEach((v) => {
         successCount.push(v.count);
       });
-      
+
       options.series[0].data = errorCount;
       options.series[1].data = successCount;
       options.xAxis.data = xData;
