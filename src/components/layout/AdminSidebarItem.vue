@@ -165,6 +165,13 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    jumpUrl(id, uri, lab) {
+      if(uri) {
+        this.$router.push({
+          path: uri
+        })
+      }
+    },
     // 本地项目路由跳转
     jumprouters(route) {
       // this.$router.push({ path: route.path })

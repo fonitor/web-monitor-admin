@@ -69,8 +69,8 @@ export default {
         {
           id: 1,
           label: "项目管理",
-          resIcon: "http://energymonster-resource-icon-public.oss-cn-shanghai.aliyuncs.com/RES_TEMPLATE_1525363855803432724",
-          thumbnail: "http://energymonster-resource-icon-public.oss-cn-shanghai.aliyuncs.com/RES_TEMPLATE_1527170938498984414",
+          resIcon: "http://missxiaolin.com/project-20210116.png",
+          thumbnail: "http://missxiaolin.com/project-20210116.png",
           children: [
             {
               id: 192,
@@ -82,7 +82,7 @@ export default {
               resClassify: 0,
               resClassifyOff: 1,
               hidden: false,
-              uri: "",
+              uri: "/project/list",
             }
           ]
         }

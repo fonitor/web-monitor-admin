@@ -93,7 +93,6 @@ export default {
       let res = await httpCount(this.initData);
       if (!res.success) return;
       let useData = res.model;
-      console.log(useData);
       this.httpCountData = useData.count;
       this.data = {
         errorLists: useData.errorLists,

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import jsError from '../views/js/error.vue'
 import httpLog from '../views/http/index.vue'
+import Project from '../views/project/index.vue'
+import Page from '../views/page/index.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,16 @@ const routes = [
     path: '/http/log',
     name: 'httpLog',
     component: httpLog,
+    hidden: true
+  }, {
+    path: '/project/list',
+    name: 'Project',
+    component: Project,
+    hidden: true
+  }, {
+    path: '/page/index',
+    name: 'Page',
+    component: Page,
     hidden: true
   }
 ]
