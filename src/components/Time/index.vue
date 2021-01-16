@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="8" class="item">
+    <el-col :span="10" class="item">
       <div class="xl-col col-flex">
         <label class="form-label">时间范围:</label>
         <div class="form-control">
