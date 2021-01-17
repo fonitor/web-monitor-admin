@@ -24,7 +24,14 @@
         <el-col :span="6" class="item">
           <el-card class="box-card" shadow="always">
             <div class="title">
-              <span class="">请求成功数({{(httpCountData.successCount / (httpCountData.successCount + httpCountData.errorCount)).toFixed(2) * 100}}%)</span>
+              <span class=""
+                >请求成功数({{
+                  (
+                    httpCountData.successCount /
+                    (httpCountData.successCount + httpCountData.errorCount)
+                  ).toFixed(2) * 100
+                }}%)</span
+              >
               <span class="num">{{ httpCountData.successCount || 0 }}</span>
             </div>
             <div class="data">
@@ -42,20 +49,38 @@
       </el-row>
     </div>
     <http-top :data="data"></http-top>
+    <div class="http-api-list">
+      <table-box title="HTTP请求概况" topHeight="420">
+        <div class="page-list">
+          <el-table :data="httpLists" stripe style="width: 100%">
+            <el-table-column prop="simpleUrl" label="page"></el-table-column>
+            <el-table-column prop="httpUrl" label="api"></el-table-column>
+            <el-table-column prop="httpUrlCount" label="请求总数"></el-table-column>
+            <el-table-column prop="userId" label="用户"></el-table-column>
+          </el-table>
+          <div class="page">
+            <el-pagination background layout="prev, pager, next" :page-size="apiPageSize" @current-change="apiPageChange" :total="apiCount">
+            </el-pagination>
+          </div>
+        </div>
+      </table-box>
+    </div>
   </div>
 </template>
 
 <script>
-import { httpCount } from "../../api/http";
+import { httpCount, httpApiLists } from "../../api/http";
 import { datTime } from "../../utils/index";
 import topTime from "../../components/Time/index";
-import httpTop from '../../components/Http/top'
+import httpTop from "../../components/Http/top";
+import tableBox from "../../components/Table/index";
 
 export default {
   name: "httpLog",
   components: {
     topTime,
-    httpTop
+    httpTop,
+    tableBox,
   },
   data() {
     return {
@@ -65,7 +90,11 @@ export default {
         endTime: "",
       },
       httpCountData: {},
-      data: {}
+      data: {},
+      httpLists: [],
+      apiPageSize: 5,
+      apiCount: 0,
+      apiPage: 1,
     };
   },
   mounted() {
@@ -75,11 +104,13 @@ export default {
       startTime: time[0],
       endTime: time[1],
     };
+    
     this.init();
   },
   methods: {
     init() {
       this.getHttpCount();
+      this.getListApi();
     },
     handleOrdTimeDate() {
       if (!time || time.length <= 0) return;
@@ -89,6 +120,23 @@ export default {
         endTime: time[1],
       };
     },
+    // 错误列表概括
+    async getListApi() {
+      let params = JSON.parse(JSON.stringify(this.initData))
+      params.page = this.apiPage
+      params.pageSize = this.apiPageSize
+      let res = await httpApiLists(params);
+      if (!res.success) return
+      this.httpLists = res.model.lists
+      this.apiCount = res.model.count
+      console.log(res.model);
+    },
+    // 错误列表分页
+    apiPageChange(v) {
+      this.apiPage = v
+      this.getListApi()
+    },
+    // 统计总数图表
     async getHttpCount() {
       let res = await httpCount(this.initData);
       if (!res.success) return;
@@ -97,7 +145,7 @@ export default {
       this.data = {
         errorLists: useData.errorLists,
         successLists: useData.successLists,
-      }
+      };
     },
   },
 };
@@ -151,6 +199,24 @@ export default {
         line-height: 30px;
       }
     }
+  }
+  .http-api-list {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    .page-list {
+      padding: 0px 10px;
+      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+  }
+  .page {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }
 </style>

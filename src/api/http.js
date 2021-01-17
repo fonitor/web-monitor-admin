@@ -12,3 +12,16 @@ export function httpCount (query) {
     data: query
   })
 }
+
+
+/**
+ * 错误概括
+ * @param {*} query 
+ */
+export function httpApiLists (query) {
+  return fetch({
+    url: '/api/http/api/list',
+    method: 'post',
+    data: query
+  })
+}

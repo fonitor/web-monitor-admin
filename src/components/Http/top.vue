@@ -118,7 +118,7 @@ export default {
   border: 1px solid #ddd;
   margin: 10px 0 5px;
   width: 100%;
-  height: 344px;
+  min-height: 344px;
   background-color: #fdfdfd;
   display: flex;
   flex-direction: column;

@@ -67,7 +67,6 @@ export default {
       this.count = res.model.count || 0;
     },
     pageChange(v) {
-      console.log(v)
       this.page = v
       this.getJsList()
     }
