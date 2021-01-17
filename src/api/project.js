@@ -12,3 +12,15 @@ export function projectList (query) {
     data: query
   })
 }
+
+/**
+ * 项目添加
+ * @param {*} query
+ */
+export function projectSave (query) {
+    return fetch({
+      url: '/api/project/save',
+      method: 'post',
+      data: query
+    })
+  }
