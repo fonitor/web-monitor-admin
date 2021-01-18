@@ -54,9 +54,21 @@
         <div class="page-list">
           <el-table :data="httpLists" stripe style="width: 100%">
             <el-table-column prop="simpleUrl" label="page"></el-table-column>
-            <el-table-column prop="httpUrl" label="api"></el-table-column>
+            <el-table-column prop="httpUrl" label="api" width="400"></el-table-column>
             <el-table-column prop="httpUrlCount" label="请求总数"></el-table-column>
-            <el-table-column prop="userId" label="用户"></el-table-column>
+            <el-table-column prop="successCount" label="请求成功数"></el-table-column>
+            <el-table-column prop="errorCount" label="请求失败数"></el-table-column>
+            <el-table-column label="请求成功率">
+              <template slot-scope="scope">
+                {{ (scope.row.successCount/scope.row.httpUrlCount).toFixed(2) * 100 }}%
+              </template>
+            </el-table-column>
+            <el-table-column label="请求耗时(毫秒)">
+              <template slot-scope="scope">
+                {{ (scope.row.loadSumTime/scope.row.httpUrlCount).toFixed(2) }}
+              </template>
+              
+            </el-table-column>
           </el-table>
           <div class="page">
             <el-pagination background layout="prev, pager, next" :page-size="apiPageSize" @current-change="apiPageChange" :total="apiCount">

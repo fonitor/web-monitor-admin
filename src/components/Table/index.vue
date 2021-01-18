@@ -1,5 +1,5 @@
 <template>
-  <div class="top" :style="{height: `${topHeight}px`}">
+  <div class="top" :style="{minHeight: `${topHeight}px`}">
     <div class="title">
       {{title}}<span>{{titleTip}}</span>
     </div>
