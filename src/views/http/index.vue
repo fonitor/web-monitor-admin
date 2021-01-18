@@ -26,10 +26,10 @@
             <div class="title">
               <span class=""
                 >请求成功数({{
-                  (
+                  (httpCountData.successCount && httpCountData.errorCount) ? (
                     httpCountData.successCount /
                     (httpCountData.successCount + httpCountData.errorCount)
-                  ).toFixed(2) * 100
+                  ).toFixed(2) * 100 : '0'
                 }}%)</span
               >
               <span class="num">{{ httpCountData.successCount || 0 }}</span>
@@ -67,7 +67,6 @@
               <template slot-scope="scope">
                 {{ (scope.row.loadSumTime/scope.row.httpUrlCount).toFixed(2) }}
               </template>
-              
             </el-table-column>
           </el-table>
           <div class="page">
