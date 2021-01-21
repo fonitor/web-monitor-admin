@@ -20,7 +20,19 @@ export function httpCount (query) {
  */
 export function httpApiLists (query) {
   return fetch({
-    url: '/api/http/api/list',
+    url: '/api/http/list',
+    method: 'post',
+    data: query
+  })
+}
+
+/**
+ * 错误概括
+ * @param {*} query 
+ */
+export function httpApiErrorLists (query) {
+  return fetch({
+    url: '/api/http/error/list',
     method: 'post',
     data: query
   })
