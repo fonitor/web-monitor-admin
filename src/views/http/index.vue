@@ -257,7 +257,6 @@ export default {
       if (!res.success) return;
       let useData = res.model;
       if (!useData && !useData.statusCount && useData.statusCount.length <=0) return
-      console.log(useData.statusCount)
       let initOption = {
         tooltip: {
           trigger: "item",
