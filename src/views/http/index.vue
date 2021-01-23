@@ -188,11 +188,9 @@ export default {
     let time = datTime();
     this.initData = {
       app: this.$route.query.app,
-      startTime: "2021-01-18 00:00:00",
-      endTime: "2021-01-18 23:59:59",
+      startTime: time[0],
+      endTime: time[1],
     };
-    // data.startTime = data.startTime || moment().format("YYYY-MM-DD 00:00:00");
-    // data.endTime = data.endTime || moment().format("YYYY-MM-DD 23:59:00");
 
     this.init();
   },
@@ -258,6 +256,7 @@ export default {
       let res = await httpApiErrorStatus(this.initData);
       if (!res.success) return;
       let useData = res.model;
+      if (!useData && !useData.statusCount && useData.statusCount.length <=0) return
       console.log(useData.statusCount)
       let initOption = {
         tooltip: {
@@ -291,7 +290,6 @@ export default {
           },
         ],
       };
-      // initOption.series[0].data = useData.versionError;
       this.statusErrorOptios = initOption
     },
   },
