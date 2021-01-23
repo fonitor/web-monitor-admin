@@ -26,10 +26,12 @@
             <div class="title">
               <span class=""
                 >请求成功数({{
-                  (httpCountData.successCount && httpCountData.errorCount) ? (
-                    httpCountData.successCount /
-                    (httpCountData.successCount + httpCountData.errorCount)
-                  ).toFixed(2) * 100 : '0'
+                  httpCountData.successCount && httpCountData.errorCount
+                    ? (
+                        httpCountData.successCount /
+                        (httpCountData.successCount + httpCountData.errorCount)
+                      ).toFixed(2) * 100
+                    : "0"
                 }}%)</span
               >
               <span class="num">{{ httpCountData.successCount || 0 }}</span>
@@ -54,33 +56,90 @@
         <div class="page-list">
           <el-table :data="httpLists" stripe style="width: 100%">
             <el-table-column prop="simpleUrl" label="page"></el-table-column>
-            <el-table-column prop="httpUrl" label="api" width="400"></el-table-column>
-            <el-table-column prop="httpUrlCount" label="请求总数"></el-table-column>
-            <el-table-column prop="successCount" label="请求成功数"></el-table-column>
-            <el-table-column prop="errorCount" label="请求失败数"></el-table-column>
+            <el-table-column
+              prop="httpUrl"
+              label="api"
+              width="400"
+            ></el-table-column>
+            <el-table-column
+              prop="httpUrlCount"
+              label="请求总数"
+            ></el-table-column>
+            <el-table-column
+              prop="successCount"
+              label="请求成功数"
+            ></el-table-column>
+            <el-table-column
+              prop="errorCount"
+              label="请求失败数"
+            ></el-table-column>
             <el-table-column label="请求成功率">
               <template slot-scope="scope">
-                {{ (scope.row.successCount/scope.row.httpUrlCount).toFixed(2) * 100 }}%
+                {{
+                  (scope.row.successCount / scope.row.httpUrlCount).toFixed(2) *
+                  100
+                }}%
               </template>
             </el-table-column>
             <el-table-column label="请求耗时(毫秒)">
               <template slot-scope="scope">
-                {{ (scope.row.loadSumTime/scope.row.httpUrlCount).toFixed(2) }}
+                {{
+                  (scope.row.loadSumTime / scope.row.httpUrlCount).toFixed(2)
+                }}
               </template>
             </el-table-column>
           </el-table>
           <div class="page">
-            <el-pagination background layout="prev, pager, next" :page-size="apiPageSize" @current-change="apiPageChange" :total="apiCount">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="apiPageSize"
+              @current-change="apiPageChange"
+              :total="apiCount"
+            >
             </el-pagination>
           </div>
         </div>
       </table-box>
     </div>
+    <div class="http-api-error">
+      <table-box title="错误明细" topHeight="420">
+        <div class="page-list">
+          <el-table :data="errorHttpLists" stripe style="width: 100%">
+            <el-table-column prop="simpleUrl" label="page"></el-table-column>
+            <el-table-column
+              prop="httpUrl"
+              label="api"
+              width="400"
+            ></el-table-column>
+            <el-table-column
+              prop="httpUrlCount"
+              label="请求失败数"
+            ></el-table-column>
+            <el-table-column
+              prop="userIdCount"
+              label="影响用户数"
+            ></el-table-column>
+          </el-table>
+          <div class="page">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="errorPageSize"
+              @current-change="apiErrorPageChange"
+              :total="errorCount"
+            >
+            </el-pagination>
+          </div>
+        </div>
+      </table-box>
+    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
 <script>
-import { httpCount, httpApiLists } from "../../api/http";
+import { httpCount, httpApiLists, httpApiErrorLists } from "../../api/http";
 import { datTime } from "../../utils/index";
 import topTime from "../../components/Time/index";
 import httpTop from "../../components/Http/top";
@@ -106,22 +165,29 @@ export default {
       apiPageSize: 5,
       apiCount: 0,
       apiPage: 1,
+      errorHttpLists: [],
+      errorCount: 0,
+      errorPageSize: 5,
+      errorPage: 1,
     };
   },
   mounted() {
     let time = datTime();
     this.initData = {
       app: this.$route.query.app,
-      startTime: time[0],
-      endTime: time[1],
+      startTime: "2021-01-18 00:00:00",
+      endTime: "2021-01-18 23:59:59",
     };
-    
+    data.startTime = data.startTime || moment().format("YYYY-MM-DD 00:00:00");
+    data.endTime = data.endTime || moment().format("YYYY-MM-DD 23:59:00");
+
     this.init();
   },
   methods: {
     init() {
       this.getHttpCount();
       this.getListApi();
+      this.getErrorList();
     },
     handleOrdTimeDate() {
       if (!time || time.length <= 0) return;
@@ -133,19 +199,35 @@ export default {
     },
     // 错误列表概括
     async getListApi() {
-      let params = JSON.parse(JSON.stringify(this.initData))
-      params.page = this.apiPage
-      params.pageSize = this.apiPageSize
+      let params = JSON.parse(JSON.stringify(this.initData));
+      params.page = this.apiPage;
+      params.pageSize = this.apiPageSize;
       let res = await httpApiLists(params);
-      if (!res.success) return
-      this.httpLists = res.model.lists
-      this.apiCount = res.model.count
-      console.log(res.model);
+      if (!res.success) return;
+      this.httpLists = res.model.lists;
+      this.apiCount = res.model.count;
+    },
+    // 错误列表详细
+    async getErrorList() {
+      let params = JSON.parse(JSON.stringify(this.initData));
+      params.page = this.errorPage;
+      params.pageSize = this.errorPageSize;
+      let res = await httpApiErrorLists(params);
+      if (!res.success) return;
+
+      console.log(res);
+      this.errorHttpLists = res.model.lists;
+      this.errorCount = res.model.count;
+    },
+    // 错误详细分析
+    apiErrorPageChange(v) {
+      this.errorPage = v;
+      this.getErrorList();
     },
     // 错误列表分页
     apiPageChange(v) {
-      this.apiPage = v
-      this.getListApi()
+      this.apiPage = v;
+      this.getListApi();
     },
     // 统计总数图表
     async getHttpCount() {
@@ -228,6 +310,9 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+  }
+  .footer {
+    margin-top: 50px;
   }
 }
 </style>
