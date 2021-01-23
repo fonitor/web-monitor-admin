@@ -134,16 +134,27 @@
         </div>
       </table-box>
     </div>
+    <div class="http-api-error-detailed">
+      <table-box title="HTTP请求错误码分布" topHeight="420" topWidth="600px">
+        <vue-echarts :options="statusErrorOptios"></vue-echarts>
+      </table-box>
+    </div>
     <div class="footer"></div>
   </div>
 </template>
 
 <script>
-import { httpCount, httpApiLists, httpApiErrorLists } from "../../api/http";
+import {
+  httpCount,
+  httpApiLists,
+  httpApiErrorLists,
+  httpApiErrorStatus,
+} from "../../api/http";
 import { datTime } from "../../utils/index";
 import topTime from "../../components/Time/index";
 import httpTop from "../../components/Http/top";
 import tableBox from "../../components/Table/index";
+import VueEcharts from "../../components/VueEcharts/index";
 
 export default {
   name: "httpLog",
@@ -151,6 +162,7 @@ export default {
     topTime,
     httpTop,
     tableBox,
+    VueEcharts,
   },
   data() {
     return {
@@ -169,6 +181,7 @@ export default {
       errorCount: 0,
       errorPageSize: 5,
       errorPage: 1,
+      statusErrorOptios: {},
     };
   },
   mounted() {
@@ -178,8 +191,8 @@ export default {
       startTime: "2021-01-18 00:00:00",
       endTime: "2021-01-18 23:59:59",
     };
-    data.startTime = data.startTime || moment().format("YYYY-MM-DD 00:00:00");
-    data.endTime = data.endTime || moment().format("YYYY-MM-DD 23:59:00");
+    // data.startTime = data.startTime || moment().format("YYYY-MM-DD 00:00:00");
+    // data.endTime = data.endTime || moment().format("YYYY-MM-DD 23:59:00");
 
     this.init();
   },
@@ -188,6 +201,7 @@ export default {
       this.getHttpCount();
       this.getListApi();
       this.getErrorList();
+      this.getErrorStatus();
     },
     handleOrdTimeDate() {
       if (!time || time.length <= 0) return;
@@ -215,7 +229,6 @@ export default {
       let res = await httpApiErrorLists(params);
       if (!res.success) return;
 
-      console.log(res);
       this.errorHttpLists = res.model.lists;
       this.errorCount = res.model.count;
     },
@@ -239,6 +252,47 @@ export default {
         errorLists: useData.errorLists,
         successLists: useData.successLists,
       };
+    },
+    // 错误分布
+    async getErrorStatus() {
+      let res = await httpApiErrorStatus(this.initData);
+      if (!res.success) return;
+      let useData = res.model;
+      console.log(useData.statusCount)
+      let initOption = {
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          top: "5%",
+          left: "center",
+        },
+        series: [
+          {
+            name: "错误分布",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: "center",
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: "20",
+                fontWeight: "bold",
+              },
+            },
+            labelLine: {
+              show: false,
+            },
+            data: useData.statusCount,
+          },
+        ],
+      };
+      // initOption.series[0].data = useData.versionError;
+      this.statusErrorOptios = initOption
     },
   },
 };
@@ -304,6 +358,11 @@ export default {
       height: auto;
       overflow: hidden;
     }
+  }
+  .http-api-error-detailed {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
   }
   .page {
     margin-top: 20px;

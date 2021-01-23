@@ -37,3 +37,16 @@ export function httpApiErrorLists (query) {
     data: query
   })
 }
+
+/**
+ * 错误明细
+ * @param {*} query 
+ */
+export function httpApiErrorStatus (query) {
+  return fetch({
+    url: '/api/http/error/status',
+    method: 'post',
+    data: query
+  })
+}
+

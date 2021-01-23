@@ -1,5 +1,5 @@
 <template>
-  <div class="top" :style="{minHeight: `${topHeight}px`}">
+  <div class="top" :style="{minHeight: `${topHeight}px`, width: `${topWidth}`}">
     <div class="title">
       {{title}}<span>{{titleTip}}</span>
     </div>
@@ -24,6 +24,10 @@ export default {
     topHeight: {
       type: [String, Number],
       default: 344
+    },
+    topWidth: {
+      type: String,
+      default: '100%'
     }
   },
 };
