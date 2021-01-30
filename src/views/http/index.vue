@@ -208,6 +208,7 @@ export default {
         startTime: time[0],
         endTime: time[1],
       };
+      this.init()
     },
     // 错误列表概括
     async getListApi() {
